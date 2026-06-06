@@ -15,7 +15,7 @@ fn main() {
     let N:usize = sc.next();
     let (N,Q):(usize,usize) = (sc.next(),sc.next());
     let mut A:Vec<usize> = (0..N).map(|_| sc.next()).collect();
-    let mut S:Vec<char> = sc.next::<String>().chars().collect();
+    let mut S = sc.next_chars();
     
     let mut ans = 0;
     println!("{}",ans);
@@ -40,6 +40,9 @@ impl Scanner {
         }
         self.buffer.pop_front().unwrap().parse::<T>().ok().unwrap()
     }
+    pub fn next_chars(&mut self) -> Vec<char>{
+        self.next::<String>().chars().collect()
+    }
 }
 
 //range型を[l,r)に直す関数
@@ -56,24 +59,6 @@ pub fn get_bounds_usize(range: impl std::ops::RangeBounds<usize>) -> (usize,usiz
     };
     (l,r)
 }
-
-
-
-pub fn get_bounds_f64(range: impl std::ops::RangeBounds<f64>) -> (f64,f64){
-    const EPS:f64 = 1e-9;
-    let l = match range.start_bound() {
-        std::ops::Bound::Included(l) => *l,
-        std::ops::Bound::Excluded(l) => *l+EPS,
-        std::ops::Bound::Unbounded => 0.0,
-    };
-    let r = match range.end_bound() {
-        std::ops::Bound::Included(r) => *r+EPS,
-        std::ops::Bound::Excluded(r) => *r,
-        std::ops::Bound::Unbounded => f64::MAX,
-    };
-    (l,r)
-}
-
 
 //二分探索
 //range で fがtrueとなる最小を返す
