@@ -42,46 +42,6 @@ impl Scanner {
     }
 }
 
-//Shift vec
-pub trait Shift<T>
-    where
-        T: Default + Copy,
-    {
-        fn shift(&mut self);
-    }
-impl<T> Shift<T> for Vec<T>
-    where
-        T: Default + Copy,
-    {
-        fn shift(&mut self) {
-            self.insert(0, T::default());
-        }
-    }
-    
-   
-pub trait Shift2D<T>
-    where
-        T: Default + Copy,
-    {   
-        fn shift(&mut self);
-        fn shift_2d(&mut self);
-    }
-impl<T> Shift2D<T> for Vec<Vec<T>>
-    where
-        T: Default + Copy,
-    {
-         fn shift(&mut self) {
-            self.insert(0, vec![T::default();self[0].len()]);
-        }
-        fn shift_2d(&mut self) {
-            for i in 0..self.len() {
-                self[i].shift();
-            }
-            self.shift();
-        }
-    }
-
-
 //range型を[l,r)に直す関数
 pub fn get_bounds_usize(range: impl std::ops::RangeBounds<usize>) -> (usize,usize){
     let l = match range.start_bound() {
@@ -128,24 +88,6 @@ where
             r = m;
         } else {
             l = m + 1;
-        }
-    }
-    l
-}
-
-
-//浮動小数点バージョン
-pub fn bsearch_f64<F>(range: impl std::ops::RangeBounds<f64>, f: F, eps: f64) -> f64
-where
-    F: Fn(f64) -> bool,
-{
-    let (mut l, mut r) = get_bounds_f64(range);
-    while r - l > eps {
-        let m = (l + r) / 2.0;
-        if f(m) {
-            r = m;
-        } else {
-            l = m;
         }
     }
     l
