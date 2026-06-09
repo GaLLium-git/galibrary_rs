@@ -21,8 +21,8 @@ pub fn gcd(n:usize,m:usize)->usize{
 
 pub fn is_prime(n:usize)->bool{
     let mut is_prime=true;
-    for i in 2..=num::integer::sqrt(n){  //can use usize::isqrt in std from Rust 1.84
-        if n%i==0{
+    for i in 2..=n.isqrt(){
+        if n%i == 0{
             is_prime=false;
         }
     }
@@ -31,8 +31,8 @@ pub fn is_prime(n:usize)->bool{
 
 pub fn divisors(n:usize)->Vec<usize>{
     let mut divisors=vec![];
-    for i in (1..=num::integer::sqrt(n)){
-        if n%i==0{
+    for i in 1..=n.isqrt(){
+        if n%i == 0{
             divisors.push(i);
             if !(i*i==n){
                 divisors.push(n/i);
