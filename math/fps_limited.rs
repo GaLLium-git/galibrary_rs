@@ -1,4 +1,4 @@
-//全部長さを制御しているVecに対する実装　なぜかこっちの方が速い
+//全部長さを制御しているVecに対する実装　より高速？
 type Mint = ac_library::ModInt998244353;
 use ac_library::convolution;
 
