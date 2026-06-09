@@ -1,21 +1,19 @@
-// https://github.com/GaLLium-git/library02_rs/blob/main/template.rs
+// https://github.com/GaLLium-git/galibrary_rs/blob/main/template.rs
 #![allow(unused)]
 #![allow(non_snake_case)]
 #![allow(dead_code)]
-use template::*;
+use proconio::*;
+use ac_library::*;
 use itertools::*;
 use std::collections::*;
 
 /* 考察
 
 */
-//type Mint = ac_library::ModInt998244353; 
 fn main() {
-    let mut sc = Scanner::new();
-    let N:usize = sc.next();
-    let (N,Q):(usize,usize) = (sc.next(),sc.next());
-    let mut A:Vec<usize> = (0..N).map(|_| sc.next()).collect();
-    let mut S = sc.next_chars();
+    input!{
+        
+    }
     
     let mut ans = 0;
     println!("{}",ans);
