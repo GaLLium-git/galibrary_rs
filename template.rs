@@ -2,8 +2,7 @@
 #![allow(unused)]
 #![allow(non_snake_case)]
 #![allow(dead_code)]
-use proconio::*;
-use ac_library::*;
+use template::*;
 use itertools::*;
 use std::collections::*;
 
@@ -11,17 +10,14 @@ use std::collections::*;
 
 */
 fn main() {
-    input!{
-        
-    }
-    
+    let mut sc = Scanner::new();
     let mut ans = 0;
     println!("{}",ans);
 }
 
 
 pub mod template{
-
+    
 //Scanner
 pub struct Scanner{
     buffer: std::collections::VecDeque<String>,
@@ -58,8 +54,7 @@ pub fn get_bounds_usize(range: impl std::ops::RangeBounds<usize>) -> (usize,usiz
     (l,r)
 }
 
-//二分探索
-//range で fがtrueとなる最小を返す
+//二分探索 range で fがtrueとなる最小を返す
 pub fn bsearch_usize<F>(range: impl std::ops::RangeBounds<usize>, f: F) -> usize
 where
     F: Fn(usize) -> bool,
@@ -75,75 +70,27 @@ where
     }
     l
 }
-    
- //cumulate,cumlate_rev
-pub trait Cumulate<T> 
-    where
-      T:Clone,
-    {
-    fn cumulate<F>(&self, f: F) -> Vec<T>
-    where
-        F: Fn(&T,&T) -> T;
-     fn cumulate_rev<F>(&self, f: F) -> Vec<T>
-     where
-        F: Fn(&T,&T) -> T;
+
+//累積和(1次元,2次元)
+pub fn cumulate<T:Copy,F:Fn(T,T)->T>(A:&Vec<T>,f:F) -> Vec<T>{
+    let mut res = A.clone();
+    for i in 1..A.len(){
+        res[i] = f(res[i],res[i-1]);
     }
-impl<T> Cumulate<T> for Vec<T>
-    where
-      T:Clone,
-    {
-     fn cumulate<F>(&self, f: F) ->Vec<T>
-     where
-        F: Fn(&T,&T) ->T, 
-      {
-        let mut cumvec= self.clone();
-        for i in 1..self.len() {
-          cumvec[i]=f(&cumvec[i-1],&self[i]);
+    res
+}
+pub fn cumulate2D<T:Copy,F:Fn(T,T)->T>(A:&Vec<Vec<T>>,f:F) -> Vec<T>{
+    let mut res = A.clone();
+    for i in 0..A.len(){
+        for j in 1..A[0].len(){
+            res[i][j] = f(res[i][j],res[i][j-1]);
         }
-        cumvec
-      }  
-     fn cumulate_rev<F>(&self, f: F) ->Vec<T>
-     where
-        F: Fn(&T,&T) ->T, 
-      {
-        let mut cumvec = self.clone();
-        for i in (0..self.len()-1).rev() {
-          cumvec[i]=f(&cumvec[i+1],&self[i]);
-        }
-        cumvec
-      }
     }
-    
-  //cumlate_2d
-pub trait Cumulate2D<T> 
-    where
-      T:Clone,
-    {
-    fn cumulate_2d<F>(&self, f: F) -> Vec<Vec<T>>
-    where
-        F: Fn(&T,&T) -> T;
-    }
-impl<T> Cumulate2D<T> for Vec<Vec<T>>
-    where
-      T:Clone,
-    {
-     fn cumulate_2d<F>(&self, f: F) ->Vec<Vec<T>>
-     where
-        F: Fn(&T,&T) ->T, 
-      {
-        let mut cumvec = self.clone();
-        for i in 0..self.len() {
-          for j in 1..self[i].len(){
-            cumvec[i][j]=f(&cumvec[i][j],&cumvec[i][j-1]);
-          }
+    for j in 0..A[0].len(){
+        for j in 1..A.len(){
+            res[i][j] = f(res[i][j],res[i-1][j]);
         }
-        for i in 1..self.len() {
-          for j in 0..self[i].len(){
-            cumvec[i][j]=f(&cumvec[i][j],&cumvec[i-1][j]);
-          }
-        }
-        cumvec
-      }  
     }
-    
+    res
+}
 }
