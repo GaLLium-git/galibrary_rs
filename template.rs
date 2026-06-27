@@ -79,7 +79,7 @@ pub fn cumulate<T:Copy,F:Fn(T,T)->T>(A:&Vec<T>,f:F) -> Vec<T>{
     }
     res
 }
-pub fn cumulate2D<T:Copy,F:Fn(T,T)->T>(A:&Vec<Vec<T>>,f:F) -> Vec<T>{
+pub fn cumulate2D<T:Copy,F:Fn(T,T)->T>(A:&Vec<Vec<T>>,f:F) -> Vec<Vec<T>>{
     let mut res = A.clone();
     for i in 0..A.len(){
         for j in 1..A[0].len(){
@@ -87,7 +87,7 @@ pub fn cumulate2D<T:Copy,F:Fn(T,T)->T>(A:&Vec<Vec<T>>,f:F) -> Vec<T>{
         }
     }
     for j in 0..A[0].len(){
-        for j in 1..A.len(){
+        for i in 1..A.len(){
             res[i][j] = f(res[i][j],res[i-1][j]);
         }
     }
