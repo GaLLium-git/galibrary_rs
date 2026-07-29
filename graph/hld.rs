@@ -82,7 +82,7 @@ impl HLD{
         loop{
             if self.top[u] == self.top[v]{
                 let l = self.index[u].min(self.index[v]);
-                let r = self.index[u].max(self.index[v])+1;
+                let r = self.index[u].max(self.index[v])+1; //辺重みなら+1を外す
                 ranges.push((l,r));
                 return ranges;
             }
