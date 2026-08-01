@@ -1,4 +1,4 @@
-pub fn bellmanford(N:usize, edges: &Vec<(usize,usize,i64)>, root:usize) -> Vec<i64>{ //let mut bellmanford = |root:usize| -> Vec<usize>{
+pub fn bellmanford(N:usize, edges: &Vec<(usize,usize,i64)>, root:usize) -> Vec<i64>{
     let mut dist = vec![i64::MAX;N+1];
     dist[root]=0;
     for _ in 0..N-1{
@@ -17,4 +17,4 @@ pub fn bellmanford(N:usize, edges: &Vec<(usize,usize,i64)>, root:usize) -> Vec<i
         }
     }
     dist
-} //};
+}
