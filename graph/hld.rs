@@ -33,19 +33,19 @@ impl HLD{
     fn dfs1(&mut self, v:usize, p:usize){
         self.parent[v] = p;
         if p!=usize::MAX {self.depth[v] = self.depth[p]+1;}
-        let mut maxsize = 0;
-        let mut size = 1;
+        let mut maxsz = 0;
+        let mut sz = 1;
         let children = self.graph[v].clone();
         for &nv in children.iter(){
             if nv == self.parent[v] {continue;}
             self.dfs1(nv,v);
-            size += self.size[nv];
-            if self.size[nv] > maxsize{
+            sz += self.size[nv];
+            if self.size[nv] > maxsz{
                 self.heavy[v] = nv;
-                maxsize = self.size[nv];
+                maxsz = self.size[nv];
             }
         }
-        self.size[v] = size
+        self.size[v] = sz;
     }
     
     //top,indexを作る(heavy辺を優先するDFS)
