@@ -24,5 +24,7 @@ pub fn eulertour(graph:&Vec<Vec<usize>>, root:usize) -> Vec<usize>{
     let mut tour = vec![];
 
     let mut dfs = recur_fn();
-    tour.push(v);
+
+    dfs(root,root);
+    tour
 }
