@@ -27,7 +27,9 @@ pub fn treefs(graph:&Vec<Vec<usize>>, root:usize) -> (Vec<usize>,Vec<usize>,Vec<
     let mut index = vec![usize::MAX;graph.len()];
     let mut tour = vec![];
     
-    let mut dfs = recur_fn({
+    let mut dfs = recur_fn(|v:usize,p:usize|{
+        if p != usize::MAX
+        tour.push(v);
         
     });
     dfs(root,usize::MAX);
