@@ -19,13 +19,17 @@ pub fn dfs(graph:&Vec<Vec<usize>>, v:usize, p:usize){
 }
 
 
-//木の色々
-pub fn treesis(graph:&Vec<Vec<usize>>, root:usize) -> (Vec<usize>,Vec<usize>,Vec<usize>,Vec<usize>){
-    let mut tour = vec![];
-    let mut index = vec![usize::MAX;graph.len()];
+//(depth,parent,size,index,tour)
+pub fn treefs(graph:&Vec<Vec<usize>>, root:usize) -> (Vec<usize>,Vec<usize>,Vec<usize>,Vec<usize>,Vec<usize>){
+    let mut depth = vec![usize::MAX;graph.len()];
+    let mut parent = vec![usize::MAX;graph.len()];
     let mut size = vec![usize::MAX;graph.len()];
-
-    let mut dfs = recur_fn();
-    dfs(root,root);
+    let mut index = vec![usize::MAX;graph.len()];
+    let mut tour = vec![];
+    
+    let mut dfs = recur_fn({
+        
+    });
+    dfs(root,usize::MAX);
     (tour,index,size)
 }
