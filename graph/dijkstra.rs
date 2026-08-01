@@ -1,4 +1,4 @@
-pub fn dijkstra(graph:&Vec<Vec<usize>>, root:usize) -> Vec<usize>{ //let mut dijkstra = |root:usize| -> Vec<usize>{
+pub fn dijkstra(graph:&Vec<Vec<usize>>, root:usize) -> Vec<usize>{
     use std::cmp::Reverse;
     let mut check = vec![false;N+1];
     let mut cur = vec![usize::MAX;N+1];
@@ -18,5 +18,5 @@ pub fn dijkstra(graph:&Vec<Vec<usize>>, root:usize) -> Vec<usize>{ //let mut dij
         }
     }
     cur
-} //};
+}
 
