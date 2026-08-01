@@ -28,10 +28,19 @@ pub fn treefs(graph:&Vec<Vec<usize>>, root:usize) -> (Vec<usize>,Vec<usize>,Vec<
     let mut tour = vec![];
     
     let mut dfs = recur_fn(|v:usize,p:usize|{
-        if p != usize::MAX
+        index[v] = tour.len(); 
         tour.push(v);
-        
+        parent[v] = p;
+        if p!=usize::MAX {depth[v] = depth[p]+1;}
+        let mut sz = 1usize;
+        for &nv in graph[v].iter(){
+            if nv == p {continue;}
+            dfs.call(nv,v);
+            sz += size[nv];
+        }
+        size[v] = sz
     });
-    dfs(root,usize::MAX);
-    (tour,index,size)
+    
+    dfs.call(root,usize::MAX);
+    (depth,parent,size,index,tour);
 }
