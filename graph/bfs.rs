@@ -1,4 +1,4 @@
-pub fn bfs(graph: &Vec<Vec<usize>>, root:usize) -> Vec<usize>{ //let mut bfs = |root:usize| -> Vec<usize>{
+pub fn bfs(graph: &Vec<Vec<usize>>, root:usize) -> Vec<usize>{ 
     let mut que = VecDeque::new();
     let mut dist = vec![usize::MAX;graph.len()];
     que.push_back(root);
@@ -13,5 +13,5 @@ pub fn bfs(graph: &Vec<Vec<usize>>, root:usize) -> Vec<usize>{ //let mut bfs = |
         }
     }
     dist
-} //};
+}
     
