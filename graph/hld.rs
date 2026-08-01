@@ -33,8 +33,8 @@ impl HLD{
     fn dfs1(&mut self, v:usize, p:usize){
         self.parent[v] = p;
         if p!=usize::MAX {self.depth[v] = self.depth[p]+1;}
-        let mut maxsz = 0;
-        let mut sz = 1;
+        let mut maxsz = 0usize;
+        let mut sz = 1usize;
         let children = self.graph[v].clone();
         for &nv in children.iter(){
             if nv == self.parent[v] {continue;}
