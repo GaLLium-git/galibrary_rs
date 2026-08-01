@@ -24,7 +24,7 @@ impl HLD{
             index:vec![0;len],
             cur:0,
         };
-        hld.dfs1(root,root);
+        hld.dfs1(root,usize::MAX);
         hld.dfs2(root,root);
         hld
     }
@@ -32,7 +32,7 @@ impl HLD{
     //depth,parent,size,heavyを作る
     fn dfs1(&mut self, v:usize, p:usize){
         self.parent[v] = p;
-        if v!=p {self.depth[v] = self.depth[p]+1;}
+        if p!=usize::MAX {self.depth[v] = self.depth[p]+1;}
         let mut maxsize = 0;
         let mut size = 1;
         let children = self.graph[v].clone();
