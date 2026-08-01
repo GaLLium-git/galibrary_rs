@@ -19,12 +19,13 @@ pub fn dfs(graph:&Vec<Vec<usize>>, v:usize, p:usize){
 }
 
 
-//木のオイラーツアー
-pub fn eulertour(graph:&Vec<Vec<usize>>, root:usize) -> Vec<usize>{
+//木の色々
+pub fn treesis(graph:&Vec<Vec<usize>>, root:usize) -> (Vec<usize>,Vec<usize>,Vec<usize>,Vec<usize>){
     let mut tour = vec![];
+    let mut index = vec![usize::MAX;graph.len()];
+    let mut size = vec![usize::MAX;graph.len()];
 
     let mut dfs = recur_fn();
-
     dfs(root,root);
-    tour
+    (tour,index,size)
 }
