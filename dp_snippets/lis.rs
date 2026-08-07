@@ -1,4 +1,4 @@
-pub fn lis(A:&Vec<usize>) -> usize{
+pub fn LIS(A:&Vec<usize>) -> usize{
    let N = A.len();
    let mut dp = vec![usize::MAX;N];
    for &x in A.iter(){
