@@ -1,20 +1,17 @@
-let rerooting = {
-        let mut (depth,parent,size,index,tour) = treefs(&graph,1);
-        let mut ans = vec![];
+fn rerooting<T:Copy>(graph:&Vec<Vec<usize>>, identity:T, merge:impl Fn(T,T)->T, collect:impl Fn(usize,T)->T){
+    let (depth,parent,size,index,tour) = treefs(&graph,1);
     
-    
-        let identity = 1usize;
-        let mut merge = |x:usize,y:usize| -> usize {(x+y)%M};
-        let mut collect = |v:usize,x:usize| -> usize {(x+1)%M};
-    
-        let mut dp = vec![identity;N+1]; //普通の木dp
-        for &v in tour.iter().rev(){
-            for &nv in graph[i].len(){
-                if nv == parent[v] {continue;}
-                dp[v] = merge(dp[v],dp[nv]);
-            }
-            dp[v] = collect(v,dp[v]);
+    let mut dp = vec![identity;graph.len()]; //普通の木dp
+    for &v in tour.iter().rev(){
+        for &nv in graph[v].iter(){
+            if nv == parent[v] {continue;}
+            dp[v] = merge(dp[v],dp[nv]);
         }
-    
-        let mut rdp = vec![identity;N+1];
+        dp[v] = collect(v,dp[v]);
     }
+
+    let mut rdp = vec![identity;graph.len()];
+    for &v in tour.iter(){
+        
+    }
+}
