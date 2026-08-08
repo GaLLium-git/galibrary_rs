@@ -1,4 +1,4 @@
-fn LCS(S:Vec<char>,T:Vec<char>) -> Vec<char>{
+let LCS = {
     let mut dp = vec![vec![0usize;T.len()];S.len()];
     for i in 1..S.len(){
         for j in 1..T.len(){
@@ -24,4 +24,5 @@ fn LCS(S:Vec<char>,T:Vec<char>) -> Vec<char>{
         }
     }
     ans.reverse();
-}
+    ans
+};
