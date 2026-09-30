@@ -21,7 +21,7 @@ pub fn dfs(graph:&Vec<Vec<usize>>, v:usize, p:usize){
 
 //(depth,parent,size,index,tour)
 pub fn treefs(graph:&Vec<Vec<usize>>, root:usize) -> (Vec<usize>,Vec<usize>,Vec<usize>,Vec<usize>,Vec<usize>){
-    let mut depth = vec![usize::MAX;graph.len()];
+    let mut depth = vec![usize::MAX;graph.len()]; depth[root] = 0;
     let mut parent = vec![usize::MAX;graph.len()];
     let mut size = vec![usize::MAX;graph.len()];
     let mut index = vec![usize::MAX;graph.len()];
