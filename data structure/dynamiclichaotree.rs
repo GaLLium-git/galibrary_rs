@@ -1,36 +1,28 @@
-fn main(){
+fn main() {
     let mut sc = Scanner::new();
-    let (N,Q):(usize,usize) = (sc.next(),sc.next());
-    type F = (i64,i64);
-    let eval = |f:F,x:T| -> T{
-        f.0 * x + f.1
+    let (N,C):(usize,i64) = (sc.next(),sc.next());
+    let mut h:Vec<i64> = (0..N).map(|_| sc.next()).collect();
+    let mut dp = vec![0i64;N];
+    
+    type F = (usize,i64);
+    let eval = |f:F,x:Tx| -> Ty{
+        if f.0 == usize::MAX{i64::MAX}
+        else {f.1+(h[f.0]-h[x])*(h[f.0]-h[x])+C}
     };
-    let id = (0,i64::MAX);
-    let x_min = -1_000_000_005;
-    let x_max = 1_000_000_005;
-    let mut Li = LiChaoTree::new(eval,id,x_min,x_max);
     
-    for _ in 0..N{
-        let (a,b):(i64,i64) = (sc.next(),sc.next());
-        Li.add((a,b));
+    let mut lichao = LiChaoTree::new(eval,(usize::MAX,0),0,N);
+    lichao.add((0,0));
+    for i in 1..N{
+        dp[i] = lichao.get(i);
+        lichao.add((i,dp[i]));
     }
-    
-    for _ in 0..Q{
-        let qu:usize = sc.next();
-        if qu==0{
-            let (a,b):(i64,i64) = (sc.next(),sc.next());
-            Li.add((a,b));
-        } else{
-            let x:i64 = sc.next();
-            println!("{}",Li.get(x));
-        }
-    }
+    //eprintln!("{:?}",dp);
+    println!("{}",dp[N-1]);
 }
 
-//Dynamic Li Chao Tree
-//追加，取得ともにO(logN)
 
-type T = i64; //xの型 
+type Tx = usize; //引数の型
+type Ty = i64; //返り値の型
 #[derive(Copy, Clone)]
 struct Node<F>{
     f: F,
@@ -42,21 +34,21 @@ struct Node<F>{
 pub struct LiChaoTree<F,Eval>
 where
     F: Copy,
-    Eval: Fn(F, T) -> T,
+    Eval: Fn(F, Tx) -> Ty,
 {
     tree: Vec<Node<F>>,    
     eval: Eval,
     id: F,
-    x_min: T,
-    x_max: T,
+    x_min: Tx,
+    x_max: Tx,
 }
 
 impl<F,Eval> LiChaoTree<F,Eval>
 where
     F: Copy,
-    Eval: Fn(F, T) -> T,
+    Eval: Fn(F, Tx) -> Ty,
 {
-    pub fn new(eval:Eval, id:F, x_min:T, x_max:T) -> Self{
+    pub fn new(eval:Eval, id:F, x_min:Tx, x_max:Tx) -> Self{
         Self {
             tree: vec![Node{f:id,lc:None,rc:None}],
             eval,
@@ -67,7 +59,7 @@ where
     }
     
     //[l,r)を覆うノードvでの更新
-    fn _add(&mut self, mut f:F, v:usize, l:T, r:T){
+    fn _add(&mut self, mut f:F, v:usize, l:Tx, r:Tx){
         let m = l+(r-l)/2;
         let new_m = (self.eval)(f,m);
         let pre_m = (self.eval)(self.tree[v].f,m);
@@ -108,7 +100,7 @@ where
     }
     
     //[l,r)を覆うノードvでのｘの代入
-    fn _get(&self, x:T, v:usize, l:T, r:T) -> T{
+    fn _get(&self, x:Tx, v:usize, l:Tx, r:Tx) -> Ty{
         let m = l+(r-l)/2;
         let mut res = (self.eval)(self.tree[v].f, x);
         //左側
@@ -122,7 +114,7 @@ where
         res
     }
     
-    pub fn get(&self, x:T) -> T{
+    pub fn get(&self, x:Tx) -> Ty{
        self._get(x,0,self.x_min,self.x_max)
     }
 }
