@@ -3,6 +3,7 @@ pub trait Fps{
     fn add(&self, rhs:&[Mint]) -> Vec<Mint>;
     fn sub(&self, rhs:&[Mint]) -> Vec<Mint>;
     fn mul(&self, rhs:&[Mint]) -> Vec<Mint>;
+    fn mul_limited(&self, rhs:&[Mint], len:usize) -> Vec<Mint>;
     fn mul_const(&self, c:Mint) -> Vec<Mint>;
     fn inv(&self, len:usize) -> Vec<Mint>;
     fn bibun(&self) -> Vec<Mint>;
@@ -41,8 +42,10 @@ impl Fps for [Mint]{
     fn mul(&self, rhs:&[Mint]) -> Vec<Mint>{
         ac_library::convolution(&self, rhs)
     }
-    fn mul_truncate(&self, rhs:&[Mint], len:usize) -> Vec<Mint>{
-    
+    fn mul_limited(&self, rhs:&[Mint], len:usize) -> Vec<Mint>{
+        let mut res = ac_library::convolution(&self[0..self.len().max(len)], &rhs[0..rhs.len().max(len)]);
+        res.resize(len, Mint::new(0))
+        res
     }
     
     
@@ -62,8 +65,8 @@ impl Fps for [Mint]{
             //-ggf[preL..L] = -(g * gf[preL..L])[0..L-preL]をgに連結する
             let preL = res.len();
             let L = (preL*2).min(len);
-            let mut rhs = res.mul(f,L);
-            let mut new = res.mul(&rhs[preL..L],L-preL);
+            let mut rhs = res.mul_limited(rhs,L);
+            let mut new = res.mul_limited(&rhs[preL..L],L-preL);
             for i in 0..L-preL{
                 res.push(-new[i]);
             }
@@ -106,8 +109,8 @@ impl Fps for [Mint]{
             //g(-log(g)+f)[preL..L] = (g * (-log(g)+f)[preL..L])[0..L-preL]をgに連結する
             let preL = res.len();
             let L = (preL*2).min(len);
-            let mut rhs = f[..L].sub(&res.log(L));
-            let mut new = res.mul(&rhs[preL..L],L-preL);
+            let mut rhs = self[..self.len().max(L)].sub(&res.log(L));
+            let mut new = res.mul_limited(&rhs[preL..L],L-preL);
             for i in 0..L-preL{
                 res.push(new[i]);
             }
