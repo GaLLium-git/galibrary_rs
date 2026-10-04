@@ -48,7 +48,6 @@ impl Fps for [Mint]{
         res
     }
     
-    
     fn mul_const(&self, c:Mint) -> Vec<Mint>{
         let mut res = vec![Mint::new(0);self.len()];
         for i in 0..self.len(){
@@ -125,9 +124,8 @@ impl Fps for [Mint]{
 
     fn assign(&self, c:Mint) -> Mint{
         let mut res = Mint::new(0);
-        for i in 0..self.len(){
-            res *= c;
-            res += self[i];
+        for i in (0..self.len()).rev(){
+            res *= c; res += self[i];
         }
         res
     }
