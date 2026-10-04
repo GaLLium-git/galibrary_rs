@@ -126,9 +126,8 @@ impl Fps for Vec<Mint>{
 
     fn assign(&self, c:Mint) -> Mint{
         let mut res = Mint::new(0);
-        for i in 0..self.len(){
-            res *= c;
-            res += self[i];
+        for i in (0..self.len()).rev(){
+            res *= c; res += self[i];
         }
         res
     }
