@@ -11,7 +11,7 @@ fn Larsch(N:usize, f:impl Fn(usize,usize)->T) -> Vec<T>{
             (dp[m],arg[m]) = (dp[m],arg[m]).min((dp[k]+f(k,m),k));
         }
         solve(l,m,dp,arg,f);
-        for k in l..=m{(dp[r],arg[r]) = (dp[r],arg[r]).min((dp[k]+f(k,r),k));}
+        for k in l+1..=m{(dp[r],arg[r]) = (dp[r],arg[r]).min((dp[k]+f(k,r),k));}
         solve(m,r,dp,arg,f);
     }
     
