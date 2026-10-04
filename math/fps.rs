@@ -43,8 +43,8 @@ impl Fps for [Mint]{
         ac_library::convolution(&self, rhs)
     }
     fn mul_limited(&self, rhs:&[Mint], len:usize) -> Vec<Mint>{
-        let mut res = ac_library::convolution(&self[0..self.len().max(len)], &rhs[0..rhs.len().max(len)]);
-        res.resize(len, Mint::new(0))
+        let mut res = ac_library::convolution(&self[0..self.len().min(len)], &rhs[0..rhs.len().min(len)]);
+        res.resize(len, Mint::new(0));
         res
     }
     
@@ -59,14 +59,14 @@ impl Fps for [Mint]{
     
     fn inv(&self, len:usize) -> Vec<Mint>{
         let mut res = Vec::with_capacity(len);
-        res.push(Mint::new(1)/f[0]);
+        res.push(Mint::new(1)/self[0]);
         while res.len() < len{
             //ニュートン法 g=g(2-gf) 精度preL -> L
             //-ggf[preL..L] = -(g * gf[preL..L])[0..L-preL]をgに連結する
             let preL = res.len();
             let L = (preL*2).min(len);
-            let mut rhs = res.mul_limited(rhs,L);
-            let mut new = res.mul_limited(&rhs[preL..L],L-preL);
+            let rhs = res.mul_limited(self,L)[preL..L];
+            let new = res.mul_limited(&rhs,L-preL);
             for i in 0..L-preL{
                 res.push(-new[i]);
             }
@@ -109,8 +109,8 @@ impl Fps for [Mint]{
             //g(-log(g)+f)[preL..L] = (g * (-log(g)+f)[preL..L])[0..L-preL]をgに連結する
             let preL = res.len();
             let L = (preL*2).min(len);
-            let mut rhs = self[..self.len().max(L)].sub(&res.log(L));
-            let mut new = res.mul_limited(&rhs[preL..L],L-preL);
+            let mut rhs = self[..self.len().min(L)].sub(&res.log(L))[preL..L];
+            let mut new = res.mul_limited(&rhs,L-preL);
             for i in 0..L-preL{
                 res.push(new[i]);
             }
