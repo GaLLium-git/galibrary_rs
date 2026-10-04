@@ -42,7 +42,7 @@ impl Fps for [Mint]{
         ac_library::convolution(&self, rhs)
     }
     fn mul_truncate(&self, rhs:&[Mint], len:usize) -> Vec<Mint>{
-
+    
     }
     
     
@@ -55,7 +55,6 @@ impl Fps for [Mint]{
     }
     
     fn inv(&self, len:usize) -> Vec<Mint>{
-        f.resize(len,Mint::new(0));
         let mut res = Vec::with_capacity(len);
         res.push(Mint::new(1)/f[0]);
         while res.len() < len{
@@ -63,8 +62,8 @@ impl Fps for [Mint]{
             //-ggf[preL..L] = -(g * gf[preL..L])[0..L-preL]をgに連結する
             let preL = res.len();
             let L = (preL*2).min(len);
-            let mut rhs = res.mul(&f[..L]);
-            let mut new = res.mul(&rhs[preL..L]);
+            let mut rhs = res.mul(f,L);
+            let mut new = res.mul(&rhs[preL..L],L-preL);
             for i in 0..L-preL{
                 res.push(-new[i]);
             }
@@ -100,7 +99,6 @@ impl Fps for [Mint]{
 
     //定数項が0
     fn exp(&self, len:usize) -> Vec<Mint>{
-        let mut f = self.to_vec();f.resize(len,Mint::new(0));
         let mut res = Vec::with_capacity(len);
         res.push(Mint::new(1));
         while res.len() < len{
@@ -109,7 +107,7 @@ impl Fps for [Mint]{
             let preL = res.len();
             let L = (preL*2).min(len);
             let mut rhs = f[..L].sub(&res.log(L));
-            let mut new = res.mul(&rhs[preL..L]);
+            let mut new = res.mul(&rhs[preL..L],L-preL);
             for i in 0..L-preL{
                 res.push(new[i]);
             }
