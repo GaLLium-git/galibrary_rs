@@ -41,6 +41,10 @@ impl Fps for [Mint]{
     fn mul(&self, rhs:&[Mint]) -> Vec<Mint>{
         ac_library::convolution(&self, rhs)
     }
+    fn mul_truncate(&self, rhs:&[Mint], len:usize) -> Vec<Mint>{
+
+    }
+    
     
     fn mul_const(&self, c:Mint) -> Vec<Mint>{
         let mut res = vec![Mint::new(0);self.len()];
@@ -51,7 +55,7 @@ impl Fps for [Mint]{
     }
     
     fn inv(&self, len:usize) -> Vec<Mint>{
-        let mut f = self.to_vec();f.resize(len,Mint::new(0));
+        f.resize(len,Mint::new(0));
         let mut res = Vec::with_capacity(len);
         res.push(Mint::new(1)/f[0]);
         while res.len() < len{
