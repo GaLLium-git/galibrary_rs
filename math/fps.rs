@@ -64,8 +64,8 @@ impl Fps for [Mint]{
             //-ggf[preL..L] = -(g * gf[preL..L])[0..L-preL]をgに連結する
             let preL = res.len();
             let L = (preL*2).min(len);
-            let rhs = (res.mul_limited(self,L))[preL..L];
-            let new = res.mul_limited(&rhs,L-preL);
+            let rhs = &(res.mul_limited(self,L))[preL..L];
+            let new = res.mul_limited(rhs,L-preL);
             for i in 0..L-preL{
                 res.push(-new[i]);
             }
@@ -108,8 +108,8 @@ impl Fps for [Mint]{
             //g(-log(g)+f)[preL..L] = (g * (-log(g)+f)[preL..L])[0..L-preL]をgに連結する
             let preL = res.len();
             let L = (preL*2).min(len);
-            let mut rhs = (self[..self.len().min(L)].sub(&res.log(L)))[preL..L];
-            let mut new = res.mul_limited(&rhs,L-preL);
+            let rhs = &(self[..self.len().min(L)].sub(&res.log(L)))[preL..L];
+            let new = res.mul_limited(rhs,L-preL);
             for i in 0..L-preL{
                 res.push(new[i]);
             }
@@ -152,3 +152,4 @@ impl Fps for [Mint]{
         
     } 
 }
+
