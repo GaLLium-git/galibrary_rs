@@ -1,6 +1,6 @@
 //二分探索
 
-//range で fがtrueとなる最小を返す
+//rangeでfがtrueとなる最小
 pub fn bsearch_usize<F>(range: impl std::ops::RangeBounds<usize>, f: F) -> usize
 where
     F: Fn(usize) -> bool,
