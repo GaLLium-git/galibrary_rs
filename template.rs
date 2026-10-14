@@ -18,9 +18,9 @@ fn main() {
 pub mod template{
 //Scanner
 pub struct Scanner{
-    buffer: std::collections::VecDeque<String>,
+    buffer:std::collections::VecDeque<String>,
 }
-impl Scanner {
+impl Scanner{
     pub fn new() -> Self{
         Scanner {buffer: std::collections::VecDeque::new()}
     }
@@ -52,11 +52,11 @@ pub fn get_bounds_usize(range: impl std::ops::RangeBounds<usize>) -> (usize,usiz
     (l,r)
 }
 
-//二分探索 range で fがtrueとなる最小を返す
+//二分探索 rangeでfがtrueとなる最小を返す
 pub fn bsearch_usize(range: impl std::ops::RangeBounds<usize>, f:impl Fn(usize)->bool) -> usize{
     let (mut l, mut r) = get_bounds_usize(range);
-    while l < r {
-        let m = l + (r - l) / 2;
+    while l < r{
+        let m = l+(r - l) / 2;
         if f(m) {
             r = m;
         } else {
@@ -76,7 +76,7 @@ pub fn cumulate<T:Copy>(A:&Vec<T>,f:impl Fn(T,T)->T) -> Vec<T>{
 }
 pub fn cumulaterev<T:Copy>(A:&Vec<T>,f:impl Fn(T,T)->T) -> Vec<T>{
     let mut res = A.clone();
-    for i in 0..A.len()-1{
+    for i in (0..A.len()-1).rev(){
         res[i] = f(res[i],res[i+1]);
     }
     res
