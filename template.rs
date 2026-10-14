@@ -1,4 +1,4 @@
-// https://github.com/GaLLium-git/galibrary_rs/blob/main/template.rs
+// https://github.com/GaLLium-git/galibrary_rs/tree/main
 #![allow(unused)]
 #![allow(non_snake_case)]
 #![allow(dead_code)]
