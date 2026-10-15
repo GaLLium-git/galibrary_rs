@@ -6,13 +6,10 @@ where
     F: Fn(usize) -> bool,
 {
     let (mut l, mut r) = get_bounds_usize(range);
-    while l < r {
-        let m = l + (r - l) / 2;
-        if f(m) {
-            r = m;
-        } else {
-            l = m + 1;
-        }
+    while l < r{
+        let m = l+(r-l)/2;
+        if f(m){r = m;}
+        else{l = m+1;}
     }
     l
 }
