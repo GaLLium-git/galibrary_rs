@@ -8,8 +8,8 @@ where
     let (mut l, mut r) = get_bounds_usize(range);
     while r-l > 1{
         let m = l+(r-l)/2;
-        if f(m-1){r = m;}
-        else{l = m;}
+        if f(m){r = m+1;}
+        else{l = m+1;}
     }
     l
 }
