@@ -1,4 +1,4 @@
-// https://github.com/GaLLium-git/galibrary_rs/tree/main
+//任意のライブラリ: https://github.com/GaLLium-git/galibrary_rs/tree/main
 #![allow(unused)]
 #![allow(non_snake_case)]
 #![allow(dead_code)]
@@ -52,20 +52,21 @@ pub fn get_bounds_usize(range: impl std::ops::RangeBounds<usize>) -> (usize,usiz
     (l,r)
 }
 
-//二分探索 rangeでfがtrueとなる最小を返す
-pub fn bsearch_usize(range: impl std::ops::RangeBounds<usize>, f:impl Fn(usize)->bool) -> usize{
+//rangeでfがtrueとなる最小
+pub fn bsearch_usize<F>(range: impl std::ops::RangeBounds<usize>, f: F) -> usize
+where
+    F: Fn(usize) -> bool,
+{
     let (mut l, mut r) = get_bounds_usize(range);
-    while l < r{
-        let m = l+(r - l) / 2;
-        if f(m) {
-            r = m;
-        } else {
-            l = m + 1;
-        }
+    while r-l > 0{
+        let m = l+(r-l)/2;
+        if f(m){r = m}
+        else{l = m+1;}
     }
     l
 }
 
+    
 //累積和
 pub fn cumulate<T:Copy>(A:&Vec<T>,f:impl Fn(T,T)->T) -> Vec<T>{
     let mut res = A.clone();
