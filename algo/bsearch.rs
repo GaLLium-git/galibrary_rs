@@ -6,9 +6,9 @@ where
     F: Fn(usize) -> bool,
 {
     let (mut l, mut r) = get_bounds_usize(range);
-    while l < r{
+    while r-l > 1{
         let m = l+(r-l)/2;
-        if f(m){r = m;}
+        if f(m){r = m+1;}
         else{l = m+1;}
     }
     l
@@ -22,13 +22,10 @@ where
     F: Fn(f64) -> bool,
 {
     let (mut l, mut r) = get_bounds_f64(range);
-    while r - l > eps {
-        let m = (l + r) / 2.0;
-        if f(m) {
-            r = m;
-        } else {
-            l = m;
-        }
+    while r - l > eps{
+        let m = (l+r)/2.0;
+        if f(m){r = m;}
+        else{l = m;}
     }
     l
 }
