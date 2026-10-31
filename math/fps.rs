@@ -147,9 +147,36 @@ impl Fps for [Mint]{
         }
         U.bostan_mori(&V,N/2)
     }
+
     
     fn taylor_shift(&self, c:Mint){
-        
+        /*
+        let len=self.coeffs.len();
+        let mut fact_mod = vec![ModInt::new(1);len];
+        for i in 1..len{
+            fact_mod[i]=fact_mod[i-1]*ModInt::new(i);
+        }
+        let mut v1 = self.coeffs.clone();
+        for i in 0..len{
+            v1[i]*=fact_mod[i];
+        }
+        v1.reverse();
+        let mut v2 = vec![ModInt::new(1);len];
+        for i in 1..len{
+            v2[i]=v2[i-1]*c/ModInt::new(i);
+        }
+        let mut conv = convolution_mod(&v1,&v2);
+
+        let mut res = vec![ModInt::new(0);len];
+        for i in 0..len{
+            res[i] = conv[i];
+        }
+        res.reverse();
+        for i in 0..len{
+            res[i] /= fact_mod[i];
+        }
+        res
+        */
     } 
 }
 
