@@ -15,43 +15,42 @@ pub struct SparseTable<M:Monoid>{
 
 impl<M:Monoid> SparseTable<M>{
     fn new(val:&Vec<M::S>)->Self{
-        let log=(val.len().ilog2() +1) as usize;
-        let len=(1<<log);
-        let mut data=vec![vec![M::identity();len];log+1]; //i段目は分割幅2^i
+        let log = (val.len().ilog2() +1) as usize;
+        let len = (1<<log);
+        let mut data = vec![vec![M::identity();len];log+1]; //i段目は分割幅2^i
         for i in 0..val.len(){
-            data[0][i]=val[i].clone();
+            data[0][i] = val[i].clone();
         }
         
         for i in 1..=log{
             //i段目の累積処理
             for pa in 0..(1<<(log-i)){
-                let (left,right)=(pa*(1<<i),(pa+1)*(1<<i)); //区間[l,r) を担当
-                let mid=(left+right)/2; //累積の始点の仕切りの右側
+                let (left,right) = (pa*(1<<i),(pa+1)*(1<<i)); //区間[l,r) を担当
+                let mid = (left+right)/2; //累積の始点の仕切りの右側
                 
                 //右方向への累積
-                let mut accr=M::identity();
+                let mut accr = M::identity();
                 for j in mid..right{
-                    accr=M::binary_operation(&accr,&data[0][j]);
-                    data[i][j]=accr.clone();
+                    accr = M::binary_operation(&accr,&data[0][j]);
+                    data[i][j] = accr.clone();
                 }
                 //左方向への累積
-                let mut accl=M::identity();
+                let mut accl = M::identity();
                 for j in (left..mid).rev(){
-                    accl=M::binary_operation(&accl,&data[0][j]);
-                    data[i][j]=accl.clone();
+                    accl = M::binary_operation(&accl,&data[0][j]);
+                    data[i][j] = accl.clone();
                 }
             }
         }
-        
         Self{data}
     }
     
     fn prod(&self,range: impl std::ops::RangeBounds<usize>)->M::S{
         let (mut l, mut r) = get_bounds_usize(range);
-        if l==r{
+        if l == r{
             return self.data[0][l].clone();
-        } else {
-            let d=((l^r).ilog2() +1) as usize;
+        }else{
+            let d = ((l^r).ilog2() +1) as usize;
             return M::binary_operation(&self.data[d][l],&self.data[d][r]);
         }
     }
