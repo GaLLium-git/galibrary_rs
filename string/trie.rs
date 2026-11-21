@@ -1,5 +1,9 @@
 struct Node{
-    children: Vec<usize>, //子のインデックスの配列
+    children: Vec<usize>, //子
+    word: Vec<usize>,
+    count: Vec<usize>,
+    tour: Vec<usize>,
+    
     //残りの状態
     cnt: usize,
 }
@@ -42,5 +46,9 @@ impl Trie{
             self.ans += self.tree[now].cnt;
             self.tree[now].cnt += 1;
         }
+    }
+
+    pub fn search(&mut self, v:usize, word:&Vec<char>){
+
     }
 }
