@@ -6,8 +6,6 @@ fn main(){
     println!("prod 5..=5 ={}",sp.prod(5..=5));
 }
 
-
-
 use ac_library::Monoid;
 pub struct SparseTable<M:Monoid>{
     data: Vec<Vec<M::S>>,
@@ -46,12 +44,17 @@ impl<M:Monoid> SparseTable<M>{
     }
     
     fn prod(&self,range: impl std::ops::RangeBounds<usize>)->M::S{
-        let (mut l, mut r) = get_bounds_usize(range);
-        if l == r{
+        let (mut l, mut r) = get_bounds_usize(range); 
+        //assert!(l <= r);
+        if r <= l{
+            return M::identity();
+        }else if r == l+1{
             return self.data[0][l].clone();
         }else{
+            r -= 1;
             let d = ((l^r).ilog2() +1) as usize;
             return M::binary_operation(&self.data[d][l],&self.data[d][r]);
         }
     }
 }
+
