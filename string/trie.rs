@@ -1,33 +1,28 @@
 struct Node{
     children: Vec<usize>, //子
-    word: Vec<usize>,
-    count: Vec<usize>,
-    tour: Vec<usize>,
-    
     //残りの状態
-    cnt: usize,
 }
 
 impl Node{
     pub fn new() -> Self{
         Self{
             children: vec![usize::MAX;26],
-            cnt: 0,
         }
     }
 }
 
 pub struct Trie{
     tree: Vec<Node>,
-    //残りの状態
-    ans: usize, 
+    word: Vec<usize>,
+    tour: Vec<usize>,
+    suff: Vec<usize>,
+    //残りの状態 
 }
 
 impl Trie{
     pub fn new() -> Self{
         Self{
             tree: vec![Node::new()],
-            ans: 0,
         }
     }
     
@@ -43,8 +38,6 @@ impl Trie{
             }
             now = nxt;
             //処理
-            self.ans += self.tree[now].cnt;
-            self.tree[now].cnt += 1;
         }
     }
 
