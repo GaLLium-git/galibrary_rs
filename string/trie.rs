@@ -13,6 +13,7 @@ impl Node{
 
 pub struct Trie{
     tree: Vec<Node>,
+    parent: Vec<usize>,
     suff: Vec<usize>,
     //残りの状態 
 }
@@ -33,6 +34,7 @@ impl Trie{
                 nxt = self.tree.len();
                 self.tree.push(Node::new());
                 self.tree[now].children[idx] = nxt;
+                self.parent[nxt] = now;
             }
             now = nxt;
             //処理
