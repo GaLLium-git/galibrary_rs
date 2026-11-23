@@ -13,8 +13,6 @@ impl Node{
 
 pub struct Trie{
     tree: Vec<Node>,
-    vocab: Vec<usize>,
-    tour: Vec<usize>,
     suff: Vec<usize>,
     //残りの状態 
 }
