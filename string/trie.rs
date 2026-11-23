@@ -39,6 +39,7 @@ impl Trie{
         }
     }
 
+
     pub fn ahoc(&mut self){
         let mut que = VecDeque::new();
         for &c in 0..26{
