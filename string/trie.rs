@@ -13,7 +13,7 @@ impl Node{
 
 pub struct Trie{
     tree: Vec<Node>,
-    word: Vec<usize>,
+    vocab: Vec<usize>,
     tour: Vec<usize>,
     suff: Vec<usize>,
     //残りの状態 
@@ -41,7 +41,29 @@ impl Trie{
         }
     }
 
-    pub fn search(&mut self, v:usize, word:&Vec<char>){
-
+    pub fn ahoc(&mut self){
+        let mut que = VecDeque::new();
+        for &c in 0..26{
+            if self.tree[0][c] == usize::MAX{
+                self.tree[0][c] = 0;
+            }else{
+                self.suff[self.tree[0][c] = 0;
+                que.push_back(self.tree[0][c]);
+            }
+        }
+        while !que.empty(){
+            let v = que.pop_front();
+            for &c in 0..26{
+                let nv = self.tree[v][c];
+                if nv == usize::MAX{
+                    self.tree[v][c] = self.tree[suff[v]][c];
+                }else{
+                    self.suff[nv] = self.tree[self.suff[v]][c];
+                    que.push_back(nv);
+                }
+            }
+        }
+            
     }
+        
 }
